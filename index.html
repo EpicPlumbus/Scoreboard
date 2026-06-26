@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Simple Scoreboard</title>
+    <style>
+        /* Force full screen and lock orientation vibes */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #111;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            user-select: none; /* Prevents accidental text selection highlights */
+            -webkit-user-select: none;
+            overflow: hidden;
+        }
+ 
+        /* Shared side styling */
+        .side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.1s ease;
+        }
+ 
+        /* Active/Tap feedback */
+        .side:active {
+            opacity: 0.8;
+        }
+ 
+        /* Left Side (Red) */
+        #left-side {
+            background-color: #220000;
+            border-right: 2px solid #333;
+        }
+ 
+        #left-score {
+            color: #ff4444;
+        }
+ 
+        /* Right Side (Blue) */
+        #right-side {
+            background-color: #000022;
+        }
+ 
+        #right-score {
+            color: #33b5e5;
+        }
+ 
+        /* Massive, auto-scaling numbers */
+        .score {
+            font-size: 35vw; /* Scales beautifully based on screen width */
+            font-weight: bold;
+            font-variant-numeric: tabular-nums; /* Keeps 2 digits perfectly aligned */
+            line-height: 1;
+        }
+ 
+        /* Discrete Reset Button */
+        #reset-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #888;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        #reset-btn:active {
+            background-color: rgba(255, 255, 255, 0.3);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+ 
+    <div id="left-side" class="side" onclick="incrementLeft()">
+        <div id="left-score" class="score">00</div>
+    </div>
+ 
+    <div id="right-side" class="side" onclick="incrementRight()">
+        <div id="right-score" class="score">00</div>
+    </div>
+ 
+    <button id="reset-btn" onclick="resetScores()">Reset</button>
+ 
+    <script>
+        let leftScore = 0;
+        let rightScore = 0;
+ 
+        // Helper function to pad numbers to 2 digits (e.g., 5 becomes "05")
+        function formatScore(score) {
+            return score.toString().padStart(2, '0');
+        }
+ 
+        function incrementLeft() {
+            leftScore = (leftScore + 1) % 100; // Rolls over to 00 after 99
+            document.getElementById('left-score').innerText = formatScore(leftScore);
+        }
+ 
+        function incrementRight() {
+            rightScore = (rightScore + 1) % 100; // Rolls over to 00 after 99
+            document.getElementById('right-score').innerText = formatScore(rightScore);
+        }
+ 
+        function resetScores() {
+            leftScore = 0;
+            rightScore = 0;
+            document.getElementById('left-score').innerText = formatScore(leftScore);
+            document.getElementById('right-score').innerText = formatScore(rightScore);
+        }
+    </script>
+</body>
+</html>
