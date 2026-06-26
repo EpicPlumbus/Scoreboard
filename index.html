@@ -17,7 +17,7 @@
             -webkit-user-select: none;
             overflow: hidden;
         }
- 
+
         /* Shared side styling */
         .side {
             flex: 1;
@@ -28,31 +28,31 @@
             cursor: pointer;
             transition: background-color 0.1s ease;
         }
- 
+
         /* Active/Tap feedback */
         .side:active {
             opacity: 0.8;
         }
- 
+
         /* Left Side (Red) */
         #left-side {
             background-color: #220000;
             border-right: 2px solid #333;
         }
- 
+
         #left-score {
             color: #ff4444;
         }
- 
+
         /* Right Side (Blue) */
         #right-side {
             background-color: #000022;
         }
- 
+
         #right-score {
             color: #33b5e5;
         }
- 
+
         /* Massive, auto-scaling numbers */
         .score {
             font-size: 35vw; /* Scales beautifully based on screen width */
@@ -60,7 +60,7 @@
             font-variant-numeric: tabular-nums; /* Keeps 2 digits perfectly aligned */
             line-height: 1;
         }
- 
+
         /* Discrete Reset Button */
         #reset-btn {
             position: absolute;
@@ -75,6 +75,7 @@
             font-size: 1rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            z-index: 10; /* Ensures button stays on top of tappable areas */
         }
         
         #reset-btn:active {
@@ -84,36 +85,36 @@
     </style>
 </head>
 <body>
- 
+
     <div id="left-side" class="side" onclick="incrementLeft()">
         <div id="left-score" class="score">00</div>
     </div>
- 
+
     <div id="right-side" class="side" onclick="incrementRight()">
-        <div id="right-score" class="score">00</div>
+        <div id="right-score" class="score">000</div>
     </div>
- 
+
     <button id="reset-btn" onclick="resetScores()">Reset</button>
- 
+
     <script>
         let leftScore = 0;
         let rightScore = 0;
- 
+
         // Helper function to pad numbers to 2 digits (e.g., 5 becomes "05")
         function formatScore(score) {
             return score.toString().padStart(2, '0');
         }
- 
+
         function incrementLeft() {
             leftScore = (leftScore + 1) % 100; // Rolls over to 00 after 99
             document.getElementById('left-score').innerText = formatScore(leftScore);
         }
- 
+
         function incrementRight() {
             rightScore = (rightScore + 1) % 100; // Rolls over to 00 after 99
             document.getElementById('right-score').innerText = formatScore(rightScore);
         }
- 
+
         function resetScores() {
             leftScore = 0;
             rightScore = 0;
